@@ -94,7 +94,7 @@ export default function Home() {
     const handlePredict = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8000/predict", {
+            const res = await fetch("https://heart-disease-prediction-tecu.onrender.com/predict", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
