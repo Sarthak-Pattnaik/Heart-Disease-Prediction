@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageToggle from "./components/PageToggle";
 
 const models = [
     { key: "knn", label: "KNN" },
@@ -116,6 +117,7 @@ export default function Home() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center text-white">
+            <PageToggle />
             <div className="bg-slate-900/70 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-7xl">
 
                 <h1 className="text-3xl font-bold mb-6 text-center">
