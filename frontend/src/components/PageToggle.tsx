@@ -15,7 +15,7 @@ export default function PageToggle() {
   return (
     <button
       onClick={handleClick}
-      className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white font-medium"
+      className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white font-medium z-30"
     >
       {isAnalysis ? "Prediction" : "Analysis"}
     </button>
