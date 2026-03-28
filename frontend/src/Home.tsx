@@ -72,6 +72,8 @@ export default function Home() {
     );
     const [result, setResult] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [isWakingUp, setIsWakingUp] = useState(false);
+
 
     const handleChange = (index: number, value: string) => {
         const newFeatures = [...features];
@@ -94,26 +96,37 @@ export default function Home() {
 
     const handlePredict = async () => {
         setLoading(true);
+        setResult(null); // Clear previous results
+
+        // Show "Waking up" message if the server doesn't respond in 2 seconds
+        const timeout = setTimeout(() => setIsWakingUp(true), 2000);
+
         try {
             const res = await fetch("https://heart-disease-prediction-tecu.onrender.com/predict", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     model: selectedModel,
                     features,
                 }),
             });
 
+            if (!res.ok) {
+                // Handle cases where server is awake but returns an error (404, 500, etc)
+                throw new Error(`Server responded with ${res.status}`);
+            }
+
             const data = await res.json();
             setResult(data);
         } catch (err) {
-            console.error(err);
-            alert("Error connecting to backend");
+            console.error("Fetch error:", err);
+        } finally {
+            clearTimeout(timeout);
+            setIsWakingUp(false);
+            setLoading(false);
         }
-        setLoading(false);
     };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center text-white">
@@ -246,7 +259,11 @@ export default function Home() {
                         )}
                     </div>
                 )}
-
+            {isWakingUp && (
+                <div className="bg-blue-600/20 text-blue-400 p-2 text-xs rounded mb-4 animate-pulse">
+                    ⚙️ Forming Predictions (max wait time: 30 sec)
+                </div>
+            )}
             </div>
         </div>
     );
