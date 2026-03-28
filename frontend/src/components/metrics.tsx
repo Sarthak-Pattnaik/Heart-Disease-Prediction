@@ -35,9 +35,9 @@ export default function MetricsChart({ selectedModels }: any) {
   };
 
   return (
-    <div className="h-[420px] p-4 rounded-xl shadow text-white">
+    <div className="h-[420px] p-4 rounded-xl shadow bg-slate-900 text-white mb-8 flex flex-col">
 
-      {/* 🔁 Toggle */}
+      {/* 🔁 Toggle (This takes up a fixed amount of space) */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">
           Model Performance
@@ -46,9 +46,7 @@ export default function MetricsChart({ selectedModels }: any) {
         <div className="flex gap-2">
           <button
             onClick={() => setSelectedMetric("Accuracy")}
-            className={`px-3 py-1 rounded ${selectedMetric === "Accuracy"
-              ? "bg-blue-600"
-              : "bg-slate-700"
+            className={`px-3 py-1 rounded transition-colors ${selectedMetric === "Accuracy" ? "bg-blue-600" : "bg-slate-700 hover:bg-slate-600"
               }`}
           >
             Accuracy
@@ -56,9 +54,7 @@ export default function MetricsChart({ selectedModels }: any) {
 
           <button
             onClick={() => setSelectedMetric("ROC_AUC")}
-            className={`px-3 py-1 rounded ${selectedMetric === "ROC_AUC"
-              ? "bg-blue-600"
-              : "bg-slate-700"
+            className={`px-3 py-1 rounded transition-colors ${selectedMetric === "ROC_AUC" ? "bg-blue-600" : "bg-slate-700 hover:bg-slate-600"
               }`}
           >
             ROC AUC
@@ -66,26 +62,42 @@ export default function MetricsChart({ selectedModels }: any) {
         </div>
       </div>
 
-      {/* 📊 Chart */}
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={filteredData}>
-          <XAxis dataKey="Model" />
-          <YAxis domain={[0, 1]} />
-          <Tooltip
-            formatter={(value) =>
-              typeof value === 'number'
-                ? `${(value * 100).toFixed(2)}%`
-                : value
-            }
-          />
+      {/* 📊 Chart Wrapper: 'flex-1' fills remaining space, 'min-h-0' prevents overflow */}
+      <div className="flex-1 min-h-0 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <XAxis
+              dataKey="Model"
+              stroke="#94a3b8"
+              fontSize={12}
+              tickLine={false}
+            />
+            <YAxis
+              domain={[0, 1]}
+              stroke="#94a3b8"
+              fontSize={12}
+              tickLine={false}
+              tickFormatter={(val) => `${val * 100}%`}
+            />
+            <Tooltip
+              cursor={{ fill: 'rgba(255,255,255,0.1)' }}
+              contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }}
+              formatter={(value) =>
+                typeof value === 'number'
+                  ? `${(value * 100).toFixed(2)}%`
+                  : value
+              }
+            />
 
-          <Bar
-            dataKey={selectedMetric}
-            fill={metricColors[selectedMetric]}
-            animationDuration={500}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+            <Bar
+              dataKey={selectedMetric}
+              fill={metricColors[selectedMetric] || "#60a5fa"}
+              animationDuration={500}
+              radius={[4, 4, 0, 0]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
