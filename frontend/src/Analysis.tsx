@@ -12,7 +12,6 @@ const models = [
     { key: "catboost", label: "CatBoost" },
 ];
 
-// ✅ Feature names (order MUST match training data)
 const featureNames = [
     "male",
     "age",
@@ -65,7 +64,7 @@ const educationOptions = [
     { value: 4, label: "College Graduate or Higher" },
 ];
 
-export default function Home() {
+export default function Analysis() {
     const [selectedModel, setSelectedModel] = useState("logistic");
     const [features, setFeatures] = useState<number[]>(
         Array(featureNames.length).fill(0)

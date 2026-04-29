@@ -192,4 +192,4 @@ def predict(request: PredictionRequest) -> Dict[str, Any]:
         raise HTTPException(
             status_code=500,
             detail=f"Prediction failed: {str(exc)}"
-        ) from exc
+        ) from excm
