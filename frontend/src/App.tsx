@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Prediction from "./Prediction";
 import Analysis from "./Analysis";
-import Dashboard from "./Dashboard";
 import wakeUpServer from "./utils/ping";
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/analysis" element={<Analysis />} />
+        <Route path="/" element={<Analysis />} />
+        <Route path="/prediction" element={<Prediction />} />
       </Routes>
     </BrowserRouter>
   );

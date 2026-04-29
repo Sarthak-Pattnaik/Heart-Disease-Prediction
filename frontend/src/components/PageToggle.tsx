@@ -6,10 +6,10 @@ export default function PageToggle() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isAnalysis = location.pathname === "/dashboard";
+  const isAnalysis = location.pathname === "/";
 
   const handleClick = () => {
-    navigate(isAnalysis ? "/" : "/dashboard");
+    navigate(isAnalysis ? "/prediction" : "/");
   };
 
   return (
