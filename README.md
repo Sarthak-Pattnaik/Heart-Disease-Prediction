@@ -128,7 +128,7 @@ The following models were trained and compared:
 
 ## 🌐 Live Demo
 
-Frontend: *https://heart-disease-prediction-pied.vercel.app/*
+Frontend: *https://heart-disease-prediction-pied.vercel.app/*  
 Backend API: *https://heart-disease-prediction-tecu.onrender.com/docs*
 
 ---
